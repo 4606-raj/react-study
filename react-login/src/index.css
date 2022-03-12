@@ -53,3 +53,18 @@ code {
   margin-top: 50px;
   color: rgb(4, 106, 223);
 }
+
+.error-message {
+  width: 20%;
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+}
+
+.d-none {
+  display: none;
+}

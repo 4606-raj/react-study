@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
+import ErrorMessage from "./components/ErrorMessage";
+
 function App() {
 
   const [name, setName] = useState();
@@ -9,7 +11,9 @@ function App() {
   const submitLogin = () => {
     axios.post('http://127.0.0.1:3001/api/login', {email, password})
       .then((response) => {
-        console.log(response);
+        console.log(response.ok);
+      })
+      .catch(err => {
       })
   }
 
@@ -22,10 +26,13 @@ function App() {
   
   return (
     <div>
+          <ErrorMessage error="Login Failed" />
 
       <div>
         <div className="heading">
           <h1>Welcome</h1>
+
+          
         </div>
         <div>
           <form className="login-form">
