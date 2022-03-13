@@ -10,15 +10,21 @@ module.exports.login = async (req, res) => {
     if(!user)
         res.status(401).send({message: 'invalid email'})
     
-    var user = await User.findOne({where: {email: req.body.email}});
+    User.findOne({where: {email: req.body.email}})
+        .then(async response => {
+            var userVerified = await bcrypt.compare(req.body.password, response.password);
+            if(!userVerified)
+                res.status(401).send({message: 'invalid password'})
 
-    var userVerified = await bcrypt.compare(req.body.password, user.password);
+            var token = jwt.sign({email: user.email}, 'secret');
+            res.status(200).send({token})
+        })
+        .catch(err => {
+            console.log(err)
+        });
+
     
-    if(!userVerified)
-        res.status(401).send({message: 'invalid password'})
     
-    var token = jwt.sign({email: user.email}, 'secret');
-    res.status(200).send({token})
 }
 
 module.exports.register = async (req, res) => {
